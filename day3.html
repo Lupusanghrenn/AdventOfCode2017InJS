@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Day 3</title>
+</head>
+<body>
+	<h1>Response for the question : </h1>
+	<h2 id="response"></h2>
+	<h3>Use the console the see the result or you can also use the source code to see the javaScript Code</h3>
+<script type="text/javascript">
+	var input=361527;
+	//var input = 30;
+	var tab = [];
+	for (var i = 1; i < 2; i+=9) {
+		//mid
+		var mid = [i+5,i,i+1];
+
+		//Top 
+		var to = [i+4,i+3,i+2];
+
+		//bot
+		var bot = [i+6,i+7,i+8];
+		tab.push(to);
+		tab.push(mid);
+		tab.push(bot);
+	}
+	i=10;
+	var medium;
+	for (i; i <= input; i++) {
+		medium = tab.length-1;
+		//tab[medium].push(i);
+		//i++;
+		//bas droite-1 vers haut droite
+		for (var k = medium; k >= 0; k--) {
+			tab[k].push(i);
+			i++;
+		}
+		//top
+		var taille0= tab[0].length-1;
+		tab.unshift([]);
+		for (var j = taille0; j >=0; j--) {
+			tab[0][j]=i;
+			i++;
+		}
+
+		//left
+		for (var l = 0; l < tab.length; l++) {
+			tab[l].unshift(i);
+			i++;
+		}
+
+		//bot
+		tab.push([]);
+		medium++;
+		for (var m = 0; m < tab[0].length; m++) {
+			tab[medium+1].push(i);
+			i++;
+		}
+		i-=1;
+	}
+	console.log(tab);
+	var row = 0;
+	var trouve=false;
+	while (row<tab.length && !trouve) {
+		if (tab[row].includes(input)) {
+			trouve=true;
+		}
+		row++;
+	}
+	row-=1;
+	console.log(tab[row]);
+	var col = 0;
+	trouve=false;
+	while (col<tab.length && !trouve) {
+		if (tab[row][col]==input) {
+			trouve=true;
+		}
+		col++;
+	}
+	col-=1;
+	var milieu=Math.floor(tab.length/2);
+	var result=(col-milieu)+(milieu-row);
+	document.getElementById('response').innerHTML=result;
+</script>
+</body>
+</html>
