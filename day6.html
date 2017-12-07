@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Day 6</title>
+</head>
+<body>
+	<h1>Response for the question : </h1>
+	<h2 id="response"></h2>
+	<h3>Use the console the see the result or you can also use the source code to see the javaScript Code</h3>
+<script type="text/javascript">
+	var bank = [10,3,15,10,5,15,5,15,9,2,5,8,5,2,3,6];
+	//var bank = [0,2,7,0];
+	var memory = [];
+
+	var alreadySeen=false;
+	var result =0;// agit comme un compteur
+
+	while (!alreadySeen) {
+		/*var tmpArray=[];
+		for (var i = 0; i < bank.length; i++) {
+			tmpArray[i]=bank[i];
+		}
+		memory.push(tmpArray);*/
+		//memory.push(bank);
+		memory.push([bank[0],bank[1],bank[2],bank[3],bank[4],bank[5],bank[6],bank[7],bank[8],bank[9],bank[10],bank[11],bank[12],bank[13],bank[14],bank[15]]);
+		//memory.push([bank[0],bank[1],bank[2],bank[3]]);
+		var tmpIndex = max(bank);
+		var tmpMax = bank[tmpIndex];
+		bank[tmpIndex]=0;
+		tmpIndex++;
+		if (tmpIndex==bank.length) {tmpIndex=0;}
+
+		for (tmpMax;tmpMax>0;tmpMax--) {
+			bank[tmpIndex]+=1;
+			tmpIndex++;
+			if (tmpIndex==bank.length) {tmpIndex=0;}
+		}
+		
+
+		if(result >= 100000 || include(memory,bank)){
+			alreadySeen=true;
+		}
+		result++;
+	}
+
+	function max(bank){
+		//return the index of the tab with the most hight value, if ties the lower index win
+
+		var max = bank[0];
+		var index=0;
+
+		for (var i = 0; i < bank.length; i++) {
+			if (bank[i]>max) {
+				max = bank[i];
+				index=i;
+			}
+		}
+		return index;
+
+	}
+
+	function include(memoire, banq){
+		//renvoie true if memory contains bank
+		var trouve = false;
+		var index =0;
+		console.log(memoire[index][0]);
+		console.log(banq);
+		while (!trouve && index<memoire.length) {
+			var identique = true;
+			for (var i = 0; i < banq.length-1 && identique; i++) {
+				if (banq[i]!=memoire[index][i]) {
+					identique=false;
+				}
+			}
+
+
+			if (identique) {trouve=true;}
+			index++;
+		}
+		return trouve;
+	}
+
+	document.getElementById('response').innerHTML=result;
+</script>
+</body>
+</html>
